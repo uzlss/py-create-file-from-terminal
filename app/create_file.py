@@ -24,7 +24,8 @@ def read_line() -> None:
     path = []
 
     if "-d" in line_args:
-        for index, arg in enumerate(line_args[1:]):
+        dirs = line_args[line_args.index("-d") + 1:]  # DRY?
+        for index, arg in enumerate(dirs):
             if arg == "-f":
                 line_args = line_args[index + 1:]
                 break
@@ -33,7 +34,7 @@ def read_line() -> None:
         os.makedirs(os.path.join(*path), exist_ok=True)
 
     if "-f" in line_args:
-        create_file(os.path.join(*path, line_args[-1]))
+        create_file(os.path.join(*path, line_args[1]))
 
 
 if __name__ == "__main__":
