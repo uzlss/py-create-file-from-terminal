@@ -4,19 +4,20 @@ import os
 
 
 def create_file(path: str) -> None:
+    text = ""
+    line = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    index = 0
+
+    while line != "stop":
+        if index:
+            line = f"{index} {line}"
+        text += f"{line}\n"
+        line = input("Enter content line: ")
+        index += 1
+    text += "\n"
+
     with open(path, "a") as file:
-        line = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        index = 0
-
-        while line != "stop":
-            if index:
-                line = f"{index} {line}"
-
-            file.write(line + "\n")
-            line = input("Enter content line: ")
-            index += 1
-
-        file.write("\n")
+        file.write(text)
 
 
 def read_line() -> None:
@@ -24,7 +25,7 @@ def read_line() -> None:
     path = []
 
     if "-d" in line_args:
-        dirs = line_args[line_args.index("-d") + 1:]  # DRY?
+        dirs = line_args[line_args.index("-d") + 1:]
         for index, arg in enumerate(dirs):
             if arg == "-f":
                 line_args = line_args[index + 1:]
